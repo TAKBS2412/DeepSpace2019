@@ -12,4 +12,8 @@ public class DriveBaseCommand extends CommandBase {
 		driveBaseSubsystem.drive(RobotMap.stick);
 	}
 	
+	protected boolean isFinshed() {
+		return false;
+	}
+	
 }
