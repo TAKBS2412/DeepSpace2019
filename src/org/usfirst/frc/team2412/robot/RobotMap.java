@@ -7,20 +7,37 @@
 
 package org.usfirst.frc.team2412.robot;
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
-public class RobotMap {
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+ 
+ 
+public class RobotMap {
+	public static int[] motorIDs = new int[] {
+			//layout
+			/*    front    */
+			/* left  right */
+			    2,     0,
+			    3,     1, 
+			/*     back    */
+	};
+	private static MotorType brushless; 
+	//fix motors
+	
+	public static CANSparkMax[] talons = new CANSparkMax[]{
+			new CANSparkMax(motorIDs[0], brushless),
+			new CANSparkMax(motorIDs[1], brushless),
+			new CANSparkMax(motorIDs[2], brushless),
+			new CANSparkMax(motorIDs[3], brushless)
+			
+	};
+	
+	public static SpeedControllerGroup leftSide = new SpeedControllerGroup(talons[2], talons[3]);
+	public static SpeedControllerGroup rightSide = new SpeedControllerGroup(talons[0], talons[1]);
+	
+	public static DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
+	public static Joystick stick = new Joystick(0);
 }

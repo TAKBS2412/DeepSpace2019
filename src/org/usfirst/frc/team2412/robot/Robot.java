@@ -7,13 +7,16 @@
 
 package org.usfirst.frc.team2412.robot;
 
+import org.usfirst.frc.team2412.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2412.robot.subsystems.ExampleSubsystem;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2412.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2412.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +28,8 @@ import org.usfirst.frc.team2412.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
+	public Joystick stick = RobotMap.stick;
+	public DifferentialDrive robotDrive = RobotMap.drive;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -109,6 +114,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		robotDrive.arcadeDrive(stick.getY(), -stick.getTwist()*0.8, true);
 	}
 
 	/**
